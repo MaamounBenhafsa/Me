@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo</title>
+</head>
+<body>
+    <h1 id="status"></h1>
+    <h1 id="lang"></h1>
+    <h1 id="lat"></h1>
+    <a id="map-link" target="_blank"></a>
+</body>
+<script>
+    function geoFindMe() {
+
+        
+function success(position) {
+  
+
+  const latitude  = position.coords.latitude;
+  const longitude = position.coords.longitude;
+    document.getElementById('lang').innerHTML = longitude
+    document.getElementById('lat').innerHTML = latitude
+
+    const mapLink = document.querySelector('#map-link');
+        mapLink.href = '';
+  mapLink.textContent = '';
+  mapLink.href = `https://maps.google.com/?q=${latitude},${longitude}`;
+    mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+}
+
+function error() {
+    document.getElementById('status').innerHTML = 'Unable to retrieve your location'
+}
+
+if (!navigator.geolocation) {
+    document.getElementById('status').innerHTML = 'Geolocation is not supported by your browser';
+} else {
+    document.getElementById('status').innerHTML = 'Locating…';
+  navigator.geolocation.getCurrentPosition(success, error);
+}
+
+}
+window.addEventListener('load',()=>{
+    geoFindMe()
+})
+
+</script>
+</html>
